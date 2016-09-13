@@ -33,18 +33,61 @@ depend() {
   has_cmd $1 || exit_err "Missing dependency: $1"
 }
 
-calculate_version() {
-
+parse_opt() {
+  case "$1" in
+    h|help)
+      echo "help"
+      exit
+      ;;
+    s|signed)
+      signed=1
+      ;;
+    l|last|last-version)
+      last_version="$2"
+      return 1
+      ;;
+    n|next|next-version)
+      next_version="$2"
+      return 1
+      ;;
+    *)
+      exit_err "Invalid argument: $1"
+  esac
 }
 
-bump_git() {
-
+parse_opts() {
+  while [ -n "$1" ]; do
+    case "$1" in
+      --*)
+        parse_opt ${1:2}
+        ;;
+      -*)
+        opts=${1:1}
+        for (( i = 0; i < ${#opts}; i++ )); do
+          parse_opt ${opts:$i:1} "${@:2}" || shift
+        done
+        ;;
+      *)
+        exit_err "Invalid argument: $1"
+    esac
+    shift
+  done
 }
+
+# bump_git() {
+#
+# }
 
 bump_npm() {
-  has_cmd npm || return
-  [[ -f "$(npm prefix)/package.json"]] || return
+  [[ -f "${ROOT_DIR}/package.json" ]] || return
+  has_cmd npm || exit_err "package.json found but missing npm dependency"
   npm version --no-git-tag-version "$VERSION"
 }
 
 depend git
+
+default_variables
+parse_opts "$@"
+
+# bump_npm
+# bump_git
