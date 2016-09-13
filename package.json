@@ -11,5 +11,9 @@
   "bugs": {
     "url": "https://github.com/Alexendoo/git-bump/issues"
   },
+  "files": [
+    "git-bump",
+    "LICENSE"
+  ],
   "homepage": "https://github.com/Alexendoo/git-bump#readme"
 }
