@@ -17,5 +17,18 @@ depend() {
   has_cmd $1 || exit_err "Missing dependency: $1"
 }
 
-depend git
+calculate_version() {
 
+}
+
+bump_git() {
+
+}
+
+bump_npm() {
+  has_cmd npm || return
+  [[ -f "$(npm prefix)/package.json"]] || return
+  npm version --no-git-tag-version "$VERSION"
+}
+
+depend git
