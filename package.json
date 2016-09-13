@@ -15,5 +15,6 @@
     "git-bump",
     "LICENSE"
   ],
+  "bin": "git-bump",
   "homepage": "https://github.com/Alexendoo/git-bump#readme"
 }
