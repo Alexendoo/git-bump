@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+### util functions
+
+# exit with message to stderr
+exit_err() {
+  echo "$@" >&2
+  exit 1
+}
+
+has_cmd() {
+  command -v $1 >/dev/null 2>&1
+}
+
+# exit if command isn't available
+depend() {
+  has_cmd $1 || exit_err "Missing dependency: $1"
+}
+
+depend git
+

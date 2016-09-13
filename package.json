@@ -1,0 +1,15 @@
+{
+  "name": "git-bump",
+  "version": "0.0.1",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alexendoo/git-bump.git"
+  },
+  "author": "Alex Macleod <alex@macleod.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Alexendoo/git-bump/issues"
+  },
+  "homepage": "https://github.com/Alexendoo/git-bump#readme"
+}
