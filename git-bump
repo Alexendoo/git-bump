@@ -40,7 +40,7 @@ parse_opt() {
       echo "help"
       exit
       ;;
-    s|signed)
+    s|sign|signed)
       signed=1
       ;;
     l|last|last-version)
@@ -50,6 +50,10 @@ parse_opt() {
     n|next|next-version)
       next_version="$2"
       return 1
+      ;;
+    v|version)
+      echo $VERSION
+      exit 0
       ;;
     *)
       exit_err "Invalid argument: $1"
