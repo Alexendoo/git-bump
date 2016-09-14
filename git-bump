@@ -12,10 +12,11 @@ default_variables() {
 
   signed=
 
-  declare -A types 2>/dev/null || exit_err "Bash version not supported (requires 4)"
-  types[feat]="Features"
-  types[fix]="Bug Fixes"
-  types[perf]="Performance Improvements"
+  declare -a types
+  types=(feat fix perf)
+  type_feat="Features"
+  type_fix="Bug Fixes"
+  type_perf="Performance Improvements"
 }
 
 # exit with message to stderr
