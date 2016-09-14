@@ -10,6 +10,8 @@ default_variables() {
   last_version=$(git describe --abbrev=0 --tags)
   next_version=
 
+  field=2
+
   signed=
 
   declare -a types
@@ -67,9 +69,10 @@ parse_opts() {
         parse_opt ${1:2}
         ;;
       -*)
-        opts=${1:1}
+        local opts=${1:1}
         for (( i = 0; i < ${#opts}; i++ )); do
-          parse_opt ${opts:$i:1} "${@:2}" || shift
+          parse_opt ${opts:$i:1} "${@:2}"
+          shift $?
         done
         ;;
       *)
@@ -79,20 +82,35 @@ parse_opts() {
   done
 }
 
-# bump_git() {
-#
-# }
+populate_tags() {
+  declare -a tags
+  tags=($(git log --tags --simplify-by-decoration --date="short" --pretty="format:%D" | grep -o 'tag: .*' | cut -d',' -f1 | cut -d' ' -f2))
+}
+
+compute_next() {
+  [ -n "$next_version" ] && return
+
+  local IFS=.
+  local -a parts=(${last_version})
+  (( parts[field]++ ))
+  next_version="${parts[*]}"
+}
 
 bump_npm() {
   [[ -f "${ROOT_DIR}/package.json" ]] || return
   has_cmd npm || exit_err "package.json found but missing npm dependency"
-  npm version --no-git-tag-version "$VERSION"
+  npm version --no-git-tag-version "$next_version"
 }
 
+depend cut
 depend git
+depend grep
 
 default_variables
 parse_opts "$@"
+
+populate_tags
+compute_next
 
 # bump_npm
 # bump_git
