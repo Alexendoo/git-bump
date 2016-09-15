@@ -84,7 +84,7 @@ parse_opts() {
 
 populate_tags() {
   declare -a tags
-  tags=($(git log --tags --simplify-by-decoration --date="short" --pretty="format:%D" | grep -o 'tag: .*' | cut -d',' -f1 | cut -d' ' -f2))
+  tags=($(git log --tags --simplify-by-decoration --format="%D" | grep -o 'tag: .*' | cut -d',' -f1 | cut -d' ' -f2))
 }
 
 compute_next() {
